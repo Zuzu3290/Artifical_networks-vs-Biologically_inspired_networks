@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Linear Graph Model Comparison Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 36px;
+            line-height: 1.5;
+        }
+
+        h1, h2 {
+            margin-top: 32px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 1200px;
+            display: block;
+            margin: 20px 0 42px 0;
+            border: 1px solid #ddd;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 13px;
+            margin-bottom: 40px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 8px;
+            text-align: right;
+        }
+
+        th:nth-child(1),
+        th:nth-child(2),
+        td:nth-child(1),
+        td:nth-child(2) {
+            text-align: left;
+        }
+
+        .note {
+            border-left: 4px solid #777;
+            padding-left: 12px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Linear Graph Model Comparison Report</h1>
+
+<div class="note">
+This report uses connected line-graph formatting across the model list.
+The x-axis is grouped into Static, Temporal, and Event-based sections.
+Log scaling is used for latency, training time, energy, memory, parameters, and FLOPs because the values differ by large orders of magnitude.
+</div>
+
+<h2>Summary Metrics</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>group</th>
+      <th>model</th>
+      <th>accuracy</th>
+      <th>f1_macro</th>
+      <th>latency_ms_per_sample</th>
+      <th>train_time_s</th>
+      <th>gpu_mem_mb</th>
+      <th>num_params</th>
+      <th>energy_joules</th>
+      <th>power_draw_w_mean</th>
+      <th>power_draw_w_peak</th>
+      <th>gpu_util_pct_mean</th>
+      <th>temp_c_mean</th>
+      <th>vram_used_mb_peak</th>
+      <th>flops_total</th>
+      <th>macs_total</th>
+      <th>spike_rate</th>
+      <th>timesteps</th>
+      <th>real_time_factor</th>
+      <th>input_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Static</td>
+      <td>CNN</td>
+      <td>0.990700</td>
+      <td>0.990614</td>
+      <td>0.019206</td>
+      <td>99.985708</td>
+      <td>36.858887</td>
+      <td>206922</td>
+      <td>1529.359674</td>
+      <td>15.304814</td>
+      <td>26.837</td>
+      <td>10.738672</td>
+      <td>55.453755</td>
+      <td>1138.851562</td>
+      <td>2436096</td>
+      <td>1218048</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Static</td>
+      <td>MLP</td>
+      <td>0.976100</td>
+      <td>0.976027</td>
+      <td>0.021734</td>
+      <td>92.118685</td>
+      <td>21.929688</td>
+      <td>235146</td>
+      <td>1247.808026</td>
+      <td>13.542166</td>
+      <td>20.749</td>
+      <td>10.769179</td>
+      <td>55.444145</td>
+      <td>1110.726562</td>
+      <td>469504</td>
+      <td>234752</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Static</td>
+      <td>SNN_CNN</td>
+      <td>0.987300</td>
+      <td>0.987167</td>
+      <td>1.686153</td>
+      <td>977.624114</td>
+      <td>268.998047</td>
+      <td>206922</td>
+      <td>30522.693844</td>
+      <td>31.219790</td>
+      <td>40.088</td>
+      <td>8.575921</td>
+      <td>62.182465</td>
+      <td>1402.476562</td>
+      <td>61265650</td>
+      <td>30632825</td>
+      <td>0.144982</td>
+      <td>25.0</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Static</td>
+      <td>SNN_MLP</td>
+      <td>0.968500</td>
+      <td>0.968216</td>
+      <td>1.197297</td>
+      <td>676.211630</td>
+      <td>32.168945</td>
+      <td>235146</td>
+      <td>19115.614413</td>
+      <td>28.268033</td>
+      <td>31.005</td>
+      <td>7.999816</td>
+      <td>61.360739</td>
+      <td>1159.289062</td>
+      <td>11767225</td>
+      <td>5883612</td>
+      <td>0.082954</td>
+      <td>25.0</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Temporal</td>
+      <td>GRU</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.019693</td>
+      <td>114.065434</td>
+      <td>93.847656</td>
+      <td>153354</td>
+      <td>1048.989272</td>
+      <td>9.201545</td>
+      <td>17.476</td>
+      <td>5.935220</td>
+      <td>53.142079</td>
+      <td>1130.242188</td>
+      <td>2560</td>
+      <td>1280</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Temporal</td>
+      <td>LSTM</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.016002</td>
+      <td>122.699478</td>
+      <td>95.099609</td>
+      <td>204042</td>
+      <td>1247.632825</td>
+      <td>10.175167</td>
+      <td>41.597</td>
+      <td>6.938796</td>
+      <td>53.273647</td>
+      <td>1128.242188</td>
+      <td>2560</td>
+      <td>1280</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Temporal</td>
+      <td>SNN_RNN</td>
+      <td>0.846667</td>
+      <td>0.833093</td>
+      <td>2.905208</td>
+      <td>217.196794</td>
+      <td>117.443848</td>
+      <td>18954</td>
+      <td>4052.168123</td>
+      <td>18.621903</td>
+      <td>29.191</td>
+      <td>9.596380</td>
+      <td>57.129273</td>
+      <td>1234.742188</td>
+      <td>1908850</td>
+      <td>954425</td>
+      <td>0.336557</td>
+      <td>50.0</td>
+      <td>0.029052</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Temporal</td>
+      <td>SNN_TCN</td>
+      <td>0.958333</td>
+      <td>0.956623</td>
+      <td>3.855408</td>
+      <td>250.688567</td>
+      <td>118.456055</td>
+      <td>9546</td>
+      <td>5071.852232</td>
+      <td>20.233319</td>
+      <td>29.473</td>
+      <td>9.180535</td>
+      <td>58.016592</td>
+      <td>1409.460938</td>
+      <td>964900</td>
+      <td>482450</td>
+      <td>0.352057</td>
+      <td>50.0</td>
+      <td>0.038554</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Temporal</td>
+      <td>TCN</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.046166</td>
+      <td>115.140768</td>
+      <td>30.017578</td>
+      <td>39818</td>
+      <td>1168.719411</td>
+      <td>10.151504</td>
+      <td>17.437</td>
+      <td>9.701348</td>
+      <td>54.654447</td>
+      <td>1144.742188</td>
+      <td>1280</td>
+      <td>640</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Event-based</td>
+      <td>EventCNN</td>
+      <td>0.700000</td>
+      <td>0.698980</td>
+      <td>0.047264</td>
+      <td>118.478039</td>
+      <td>81.615723</td>
+      <td>620522</td>
+      <td>1347.485649</td>
+      <td>11.377870</td>
+      <td>40.580</td>
+      <td>8.152960</td>
+      <td>55.754845</td>
+      <td>1225.226562</td>
+      <td>22476288</td>
+      <td>11238144</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>event_frames_2ch</td>
+    </tr>
+    <tr>
+      <td>Event-based</td>
+      <td>EventSNN</td>
+      <td>0.110000</td>
+      <td>0.063072</td>
+      <td>0.976667</td>
+      <td>160.779145</td>
+      <td>512.156738</td>
+      <td>620522</td>
+      <td>2844.016530</td>
+      <td>17.697135</td>
+      <td>42.899</td>
+      <td>10.821594</td>
+      <td>57.519737</td>
+      <td>1751.664062</td>
+      <td>225232670</td>
+      <td>112616335</td>
+      <td>0.182033</td>
+      <td>10.0</td>
+      <td>0.019533</td>
+      <td>event_spike_stream</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Generated Graphs</h2>
+
+<h3>01_performance_accuracy_f1_line.png</h3>
+<img src="01_performance_accuracy_f1_line.png" alt="01_performance_accuracy_f1_line.png">
+
+<h3>02_latency_line_log_scale.png</h3>
+<img src="02_latency_line_log_scale.png" alt="02_latency_line_log_scale.png">
+
+<h3>03_training_time_line_log_scale.png</h3>
+<img src="03_training_time_line_log_scale.png" alt="03_training_time_line_log_scale.png">
+
+<h3>04_gpu_energy_line_log_scale.png</h3>
+<img src="04_gpu_energy_line_log_scale.png" alt="04_gpu_energy_line_log_scale.png">
+
+<h3>05_gpu_memory_line_log_scale.png</h3>
+<img src="05_gpu_memory_line_log_scale.png" alt="05_gpu_memory_line_log_scale.png">
+
+<h3>06_parameters_line_log_scale.png</h3>
+<img src="06_parameters_line_log_scale.png" alt="06_parameters_line_log_scale.png">
+
+<h3>07_flops_macs_line_log_scale.png</h3>
+<img src="07_flops_macs_line_log_scale.png" alt="07_flops_macs_line_log_scale.png">
+
+<h3>08_snn_spiking_metrics_line.png</h3>
+<img src="08_snn_spiking_metrics_line.png" alt="08_snn_spiking_metrics_line.png">
+
+<h3>cm_CNN.png</h3>
+<img src="cm_CNN.png" alt="cm_CNN.png">
+
+<h3>cm_EventCNN.png</h3>
+<img src="cm_EventCNN.png" alt="cm_EventCNN.png">
+
+<h3>cm_EventSNN.png</h3>
+<img src="cm_EventSNN.png" alt="cm_EventSNN.png">
+
+<h3>cm_GRU.png</h3>
+<img src="cm_GRU.png" alt="cm_GRU.png">
+
+<h3>cm_LSTM.png</h3>
+<img src="cm_LSTM.png" alt="cm_LSTM.png">
+
+<h3>cm_MLP.png</h3>
+<img src="cm_MLP.png" alt="cm_MLP.png">
+
+<h3>cm_SNN_CNN.png</h3>
+<img src="cm_SNN_CNN.png" alt="cm_SNN_CNN.png">
+
+<h3>cm_SNN_MLP.png</h3>
+<img src="cm_SNN_MLP.png" alt="cm_SNN_MLP.png">
+
+<h3>cm_SNN_RNN.png</h3>
+<img src="cm_SNN_RNN.png" alt="cm_SNN_RNN.png">
+
+<h3>cm_SNN_TCN.png</h3>
+<img src="cm_SNN_TCN.png" alt="cm_SNN_TCN.png">
+
+<h3>cm_TCN.png</h3>
+<img src="cm_TCN.png" alt="cm_TCN.png">
+
+</body>
+</html>
